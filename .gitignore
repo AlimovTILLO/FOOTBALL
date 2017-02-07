@@ -1,0 +1,15 @@
+.idea/.name
+.idea/vcs.xml
+.idea/FOOTBALL.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+env/
+/core/.idea/
+!/core/core/
+!/core/football/
+!/core/templates/
+!/core/manage.py
+!/.gitignore
+/core/db.sqlite3
