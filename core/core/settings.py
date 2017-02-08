@@ -31,14 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'smart_selects',
     'football',
-    # 'news',
-    # 'about',
-    # 'destination',
-    # 'partners',
-    # 'players',
-    # 'team',
-    # 'video',
+    'ckeditor',
     'django_countries',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -123,7 +118,26 @@ USE_L10N = True
 
 USE_TZ = True
 
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
+CKEDITOR_CONFIGS = {
+    'awesome_ckeditor': {
+        'toolbar': 'Basic',
+    },
+}
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 800,
+    },
+}
+CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+
+CKEDITOR_RESTRICT_BY_USER = True
+
+CKEDITOR_BROWSE_SHOW_DIRS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
@@ -138,3 +152,7 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
 MEDIA_URL = "/static/media/"
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static/media")
+
+USE_DJANGO_JQUERY = False
+
+JQUERY_URL = False

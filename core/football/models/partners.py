@@ -15,6 +15,6 @@ class PartnersBanner(models.Model):
 
     name = models.CharField(max_length=50)
     link = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     logo = models.ImageField()
 

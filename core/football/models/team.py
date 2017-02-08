@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+# from smart_selects.db_fields import ChainedManyToManyField
 from __builtin__ import unicode
 from django.utils import timezone
-
 from django.db import models
 
 
@@ -20,10 +19,10 @@ class Teams(models.Model):
     name = models.CharField(max_length=50)
     logo = models.ImageField()
     founded = models.DateTimeField(default=timezone.now)
-    website = models.CharField(max_length=50)
-    facebook = models.CharField(max_length=50)
-    vk = models.CharField(max_length=50)
-    twitter = models.CharField(max_length=50)
+    website = models.CharField(max_length=50, blank=True)
+    facebook = models.CharField(max_length=50, blank=True)
+    vk = models.CharField(max_length=50, blank=True)
+    twitter = models.CharField(max_length=50, blank=True)
 
 
 class Championship(models.Model):
@@ -47,7 +46,7 @@ class Season(models.Model):
         verbose_name = "Season"
         verbose_name_plural = "Season"
 
-    championship = models.ForeignKey(Championship)
+    championships = models.ForeignKey(Championship)
     beginning_of_the_season = models.DateTimeField(default=timezone.now)
     end_of_season = models.DateTimeField(default=timezone.now)
-    club_members = models.ManyToManyField(Teams, blank=True)
+    club_members = models.ManyToManyField(Teams)

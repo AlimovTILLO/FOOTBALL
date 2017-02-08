@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import About, News, NewsCategory, PartnersBanner, Players, ClubPlayers, Match, Goals, Cards, Teams, \
-    Championship, Season, VideoCategory, Videos
+    Championship, Season, VideoCategory, Videos, Staff#, Publication, Writer, Book
 
 # Register your models here.
 
@@ -18,3 +18,7 @@ admin.site.register(Championship)
 admin.site.register(Season)
 admin.site.register(VideoCategory)
 admin.site.register(Videos)
+admin.site.register(Staff)
+# admin.site.register(Publication)
+# admin.site.register(Writer)
+# admin.site.register(Book)

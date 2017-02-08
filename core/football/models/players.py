@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from __builtin__ import unicode
 from django.utils import timezone
-
+from .staff import Staff
+from .team import Teams
+from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
 from django.db import models
 from django_countries.fields import CountryField
 from .team import Teams, Championship, Season
@@ -61,21 +62,35 @@ class Match(models.Model):
         verbose_name_plural = "Match"
 
     championship = models.ForeignKey(Championship)
-    season = models.ForeignKey(Season)
+    season = ChainedForeignKey(Season,
+                               chained_field="championship",
+                               chained_model_field="championships",
+                               show_all=False,
+                               auto_choose=True,
+                               sort=True)
     tour = models.IntegerField()
-    host = models.CharField(max_length=50)
-    guests = models.CharField(max_length=50)
+    members = models.ManyToManyField(Season,
+                                     chained_field="season",
+                                     chained_model_field="members")
+    host = ChainedForeignKey(Teams,
+                             chained_field="season",
+                             chained_model_field="members",
+                             related_name="host",
+                             show_all=False,
+                             auto_choose=True,
+                             sort=True)
+    guests = ChainedForeignKey(Teams,
+                               chained_field="season",
+                               chained_model_field="members",
+                               related_name="guests")
     date_of_the_match = models.DateTimeField()
-    main_judge = models.CharField(max_length=50)
-    first_assistant_of_sud = models.CharField(max_length=50)
-    second_assistant_of_sud = models.CharField(max_length=50)
-    delegate_of_the_match = models.CharField(max_length=50)
+    main_judge = models.ForeignKey(Staff, related_name="main_judge")
+    first_assistant_of_sud = models.ForeignKey(Staff, related_name="first_assistant_of_sud")
+    second_assistant_of_sud = models.ForeignKey(Staff, related_name="second_assistant_of_sud")
+    delegate_of_the_match = models.ForeignKey(Staff, related_name="delegate_of_the_match")
 
 
 class Goals(models.Model):
-    def __unicode__(self):
-        return self.name
-
     class Meta:
         db_table = "goals"
         verbose_name = "Goals"
@@ -86,6 +101,9 @@ class Goals(models.Model):
     player = models.ForeignKey(Players)
     own_goal = models.BooleanField()
     penalties = models.BooleanField()
+
+    def __unicode__(self):
+        return unicode(self.goal_time) or u''
 
 
 class Cards(models.Model):
